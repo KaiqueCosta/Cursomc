@@ -17,14 +17,13 @@ public class TestConfig {
 
 	@Autowired
 	private DBService dbService;
-	
-	
+
 	@Bean
 	public boolean instantianteDatabase() throws ParseException {
 		dbService.instantianteTestDatabase();
 		return true;
 	}
-	
+
 	@Bean
 	public EmailService emailService() {
 		return new MockEmailService();

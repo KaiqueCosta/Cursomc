@@ -8,7 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import com.kaique.cursomc.domain.Pedido;
 
 public abstract class AbstractEmailService implements EmailService {
-	
+
 	@Value("${default.sender}")
 	private String sender;
 
