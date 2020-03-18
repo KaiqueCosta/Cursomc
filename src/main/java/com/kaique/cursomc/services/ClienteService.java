@@ -18,9 +18,12 @@ import com.kaique.cursomc.domain.Cliente;
 import com.kaique.cursomc.domain.Endereco;
 import com.kaique.cursomc.dto.ClienteDTO;
 import com.kaique.cursomc.dto.ClienteNewDTO;
+import com.kaique.cursomc.enums.Perfil;
 import com.kaique.cursomc.enums.TipoCliente;
 import com.kaique.cursomc.repositories.ClienteRepository;
 import com.kaique.cursomc.repositories.EnderecoRepository;
+import com.kaique.cursomc.security.UserSS;
+import com.kaique.cursomc.services.exceptions.AuthorizationException;
 import com.kaique.cursomc.services.exceptions.DataIntegrityException;
 import com.kaique.cursomc.services.exceptions.ObjectNotFoundException;
 @Service
@@ -36,6 +39,11 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 	
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId()))
+			throw new AuthorizationException("Acesso Negado");
+		
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
