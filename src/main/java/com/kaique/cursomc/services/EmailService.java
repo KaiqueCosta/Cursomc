@@ -2,6 +2,7 @@ package com.kaique.cursomc.services;
 
 import org.springframework.mail.SimpleMailMessage;
 
+import com.kaique.cursomc.domain.Cliente;
 import com.kaique.cursomc.domain.Pedido;
 
 public interface EmailService {
@@ -9,4 +10,6 @@ public interface EmailService {
 	void sendOrderConfirmationEmail(Pedido obj);
 
 	void sendEmail(SimpleMailMessage msg);
+
+	void sendNewPasswordEmail(Cliente cliente, String newPass);
 }
